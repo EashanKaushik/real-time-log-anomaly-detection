@@ -1,0 +1,5 @@
+1. WAF examples - https://docs.aws.amazon.com/waf/latest/developerguide/logging-examples.html
+2. WAF fields - https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html
+3. Detect anomalies in log data using Amazon Elasticsearch Service - https://www.youtube.com/watch?v=UyBmhVdGGz0
+4. WAF Video - https://www.youtube.com/watch?v=Zrnro4ohXdA
+5. Open Search log index - https://www.youtube.com/watch?v=t5X-l982lbU
