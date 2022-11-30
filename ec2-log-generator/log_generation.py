@@ -13,6 +13,10 @@ import datetime
 import sys
 import time
 import boto3
+import pytz
+
+newYorkTz = pytz.timezone("America/New_York") 
+
 session = boto3.Session(profile_name='default')
 s3 = session.client('s3')
 
@@ -30,7 +34,7 @@ class GenerateLog():
         with open("log.json", "r") as log_template:
             self.log  = json.load(log_template)
         
-        self.timestamp = datetime.datetime.now().timestamp()
+        self.timestamp = datetime.datetime.now(newYorkTz).timestamp()
         self.action = None
         self.httpSourceName = None
         self.httpSourceId = None
@@ -49,19 +53,19 @@ class GenerateLog():
                 
         self.action = random.choices(
             population=["ALLOW", "CAPTCHA", "Challenge", "Count", "BLOCK"], 
-            weights=[0.25, 0.25, 0.25 ,0.25, 0.01],  
+            weights=[0.25, 0.25, 0.25 ,0.25, 0.001],  
             k=1
             )[0]
         
         self.httpSourceName = random.choices(
             population=["ALB", "APIGW", "APPSYNC", "CF", "-"], 
-            weights=[0.25, 0.25, 0.25 ,0.25, 0.01],  
+            weights=[0.25, 0.25, 0.25 ,0.25, 0.001],  
             k=1
             )[0]
         self.httpSourceId = self.httpSourceName.lower()
         self.httpStatus = random.choices(
             population=["200", "202", "307", "308", "403", "404", "502", "504"], 
-            weights=[0.2, 0.2, 0.2, 0.2, 0.01, 0.01, 0.01 ,0.01],  
+            weights=[0.2, 0.2, 0.2, 0.2, 0.001, 0.001, 0.001 ,0.001],  
             k=1
             )[0]
         self.httpRequest_country = random.choices(
@@ -81,14 +85,14 @@ class GenerateLog():
             print(f"Anomaly Generated in {self.anomaly_in}")
             self.action = random.choices(
                 population=["ALLOW", "CAPTCHA", "Challenge", "Count", "BLOCK"], 
-                weights=[0.1, 0.1, 0.1 ,0.1, 0.6],  
+                weights=[0.1, 0.1, 0.1 ,0.1, 2],  
                 k=1
                 )[0]
         if self.anomaly_in == "httpSourceName":
             print(f"Anomaly Generated in {self.anomaly_in}")
             self.httpSourceName = random.choices(
                 population=["ALB", "APIGW", "APPSYNC", "CF", "-"], 
-                weights=[0.1, 0.1, 0.1 ,0.1, 0.6],  
+                weights=[0.1, 0.1, 0.1 ,0.1, 2],  
                 k=1
                 )[0]
             self.httpSourceId = self.httpSourceName.lower()
@@ -97,7 +101,7 @@ class GenerateLog():
             print(f"Anomaly Generated in {self.anomaly_in}")
             self.httpStatus = random.choices(
                 population=["200", "202", "307", "308", "403", "404", "502", "504"], 
-                weights=[0.05, 0.05, 0.05 ,0.05, 0.2, 0.2, 0.2, 0.2],  
+                weights=[0.05, 0.05, 0.05 ,0.05, 2, 2, 2, 2],  
                 k=1
                 )[0]
             
@@ -105,14 +109,14 @@ class GenerateLog():
             print(f"Anomaly Generated in {self.anomaly_in}")
             self.httpRequest_country = random.choices(
                 population=["US", "UK", "IN", "XX", "YY", "ZZ", "WW"], 
-                weights=[0.1, 0.05, 0.05, 0.2, 0.2, 0.2, 0.2],  
+                weights=[0.1, 0.05, 0.05, 2, 2, 2, 2],  
                 k=1
                 )[0]
         if self.anomaly_in == "httpMethod":
             print(f"Anomaly Generated in {self.anomaly_in}")
             self.httpRequest_httpMethod = random.choices(
                 population=["GET", "HEAD", "POST", "DELETE"], 
-                weights=[0.15, 0.15, 0.15 ,0.55],  
+                weights=[0.15, 0.15, 0.15 , 2],  
                 k=1
                 )[0]
     def send_log(self):
@@ -138,7 +142,7 @@ def job(anomaly, anomaly_in):
         response = s3.put_object(
             Body=log,
             Bucket='cloud-security-project-logs',
-            Key=str(datetime.datetime.now().timestamp()) + ".json",
+            Key=str(datetime.datetime.now(newYorkTz).timestamp()) + ".json",
         )
         count += 1
         time.sleep(10)

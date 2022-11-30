@@ -1,0 +1,7 @@
+# Crontab
+crontab -l
+crontab -e
+
+* * * * * /usr/bin/python3 /home/ec2-user/log_generation.py false
+* * * * * /usr/bin/python3 /home/ec2-user/log_generation.py true action
+

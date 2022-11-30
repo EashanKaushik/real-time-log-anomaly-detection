@@ -1,5 +1,7 @@
 *.pem
-
+new_user_credentials.csv
+*.csv
+data/
 #official python gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/

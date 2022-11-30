@@ -1,0 +1,26 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::782179263543:role/service-role/KinesisFirehoseServiceRole-KDS-OPS-UXQRm-us-east-1-1669186423757"
+            },
+            "Action": "es:*",
+            "Resource": "arn:aws:es:us-east-1:782179263543:domain/log-domain/*"
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "es:*",
+            "Resource": "arn:aws:es:us-east-1:782179263543:domain/log-domain/*",
+            "Condition": {
+                "IpAddress": {
+                    "aws:SourceIp": ""
+                }
+            }
+        }
+    ]
+}

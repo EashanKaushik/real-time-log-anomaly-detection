@@ -1,0 +1,31 @@
+# anomaly-detector
+1. action-anomaly-detector
+Fields
+- K_action
+- B_action
+
+2. source-anomaly-detector
+Fields
+- UNK_source
+- K_source
+
+3. httpstatus-anomaly-detector
+Fields
+- G_httpstatus
+- B_httpstatus
+
+4. country-anomaly-detector
+Fields
+- K_country
+- UNK_country
+
+5. method-anomaly-detector
+Fields
+- common_method
+- uncommon_method
+
+
+# SNS 
+sns-alerts
+arn:aws:iam::782179263543:role/SNSAccessIAMRole
+arn:aws:sns:us-east-1:782179263543:log-monitoring-sns-topic

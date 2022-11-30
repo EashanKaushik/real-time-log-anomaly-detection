@@ -1,0 +1,6 @@
+OpenSearch -> http-logs
+Index -> logs
+
+# Datastream and Firehouse
+logs-delivary-stream
+log-stream
